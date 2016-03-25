@@ -74,10 +74,6 @@ class GeoCoord
 	{
 		return $this->lat . "," . $this->lng;
 	}
-	public function distanceTo( $that )
-	{
-		return self::distance($this->lat,$this->lng,$that->lat,$that->lng);
-	}
 	public function bearingTo( $that )
 	{
 		// Algorithm from: https://trac.osgeo.org/openlayers/wiki/GreatCircleAlgorithms
@@ -98,42 +94,6 @@ class GeoCoord
 			$adjust = $a<0 ? 2*pi() : 0;
 		return rad2deg(atan($a/$b) + $adjust);
 	}
-	public function getWaypoint( $bearing /* degress */, $distance /* meters */ )
-	{
-		$x1 = deg2rad($this->lat);
-		$y1 = deg2rad($this->lng);
-		$bearing = deg2rad($bearing);
-		$distance = $distance / self::EARTH_RADIUS;
-		// Algorithm from: https://trac.osgeo.org/openlayers/wiki/GreatCircleAlgorithms
-		// Doesn't work...
-		//$c = $distance / self::EARTH_RADIUS; // convert arc distance to radians
-		//$y2 = rad2deg(asin( sin($y1) * cos($c) + cos($y1) * sin($c) * cos($bearing) ));
-		//$a = sin($c) * sin($bearing);
-		//$b = cos($y1) * cos($c) - sin($y1) * sin($c) * cos($bearing);
-		//if( $b == 0 )
-		//	$x2 = $x1;
-		//else
-		//	$x2 = rad2deg($x1+atan($a/$b));
-		// Algorithm from: http://stackoverflow.com/questions/7222382/get-lat-long-given-current-point-distance-and-bearing
-		$x2 = asin( sin($x1) * cos($distance) + cos($x1) * sin($distance) * cos($bearing) );
-		$y2 = $y1 + atan2( sin($bearing) * sin($distance) * cos($x1), cos($distance) - sin($x1) * sin($x2) );
-		return new GeoCoord(rad2deg($x2),rad2deg($y2));
-	}
-	public function getCircle( $radius, $detail = 1 )
-	{
-		$points = array();
-		for( $angle = 0; $angle <= 360; $angle+=$detail )
-		{
-			$tmp = $this->getWaypoint($angle,$radius);
-			array_push($points,$tmp);
-		}
-		//array_push($points,$points[0]); // close the loop
-		return $points;
-	}
-	public function getEncodedCircle( $radius, $detail = 10 )
-	{
-		return self::encodePolyline($this->getCircle($radius,$detail));
-	}
 	public static function distance( $lat1, $lng1, $lat2, $lng2 )
 	{
 		//$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($lng1 - $lng2));
@@ -148,50 +108,79 @@ class GeoCoord
 		return $dist * self::EARTH_RADIUS;
 
 	}
-	private static function encodeNumber( $num )
+	public function distanceTo( $that )
 	{
+		return self::distance($this->lat,$this->lng,$that->lat,$that->lng);
+	}
+	public static function encodeNumber( $num )
+	{
+		// Algorithm from: https://developers.google.com/maps/documentation/utilities/polylinealgorithm
 		$enc_num = "";
+		// multiply by 1e5 and round (step 2)
+		$num = round($num*1e5);
 		// left shift one bit (step 4)
 		$tmp = $num << 1;
-		// if original number is negative, invert value
+		// if original number is negative, invert value (step 5)
 		if( $num < 0 )
 			$tmp = ~($tmp);
-		// go through each 5 bit chunks in reverse order 
+		// if $tmp = 0 then, it's just a question mark
+		if( $tmp == 0 )
+			return "?";
+		// go through each 5 bit chunks in reverse order (step 6)
 		while( $tmp > 0 )
 		{
-			// get the right most 5 bits
+			// get the right most 5 bits (step 7)
 			$chunk = $tmp & 0x1F;
 			// OR the chunk with 0x20 if it's not the last one (step 8)
 			if( $tmp > 0x1F )
 				$chunk = $chunk | 0x20;
 			// add 63 (? char) to each chunk (step 10)
 			$chunk += 63;
-			// convert to ASCII
+			// convert to ASCII (step 11)
 			$enc_num .= chr($chunk);
 			// drop the right most 5 bits
-			$tmp = $tmp >> 5;
+			$tmp = $tmp >> 5; //(part of step 6)
 		}
 		return $enc_num;
 	}
 	public static function encodePolyline( array $points )
 	{
-		// Algorithm from: https://developers.google.com/maps/documentation/utilities/polylinealgorithm
-		// make points relative
-		$relative_points[] = $points[0];
+		$enc[] = self::encodeNumber($points[0]->lat) . self::encodeNumber($points[0]->lng);
 		for( $i = 1; $i < count($points); $i++ )
 		{
 			$lat = $points[$i]->lat - $points[$i-1]->lat;
 			$lng = $points[$i]->lng - $points[$i-1]->lng;
-			$tmp = new GeoCoord($lat,$lng);
-			array_push($relative_points,$tmp);
+			$enc[] = self::encodeNumber($lat) . self::encodeNumber($lng);
 		}
-		$enc_polyline = "";
-		foreach( $relative_points as $point )
+		return implode("",array_unique($enc));
+	}
+	public function getCircle( $radius, $detail = 36, $closed = false )
+	{
+		$points = array();
+		for( $angle = 0; $angle <= 360; $angle+=(360/$detail) )
 		{
-			$enc_polyline .= self::encodeNumber(round($point->lat*1e5)); // step 2
-			$enc_polyline .= self::encodeNumber(round($point->lng*1e5));
+			$tmp = $this->getWaypoint($angle,$radius);
+			array_push($points,$tmp);
 		}
-		return $enc_polyline;
+		$points = array_unique($points);
+		if( $closed )
+			array_push($points,$points[0]);
+		return $points;
+	}
+	public function getEncodedCircle( $radius, $detail = 36, $closed = false )
+	{
+		return self::encodePolyline($this->getCircle($radius,$detail,$closed));
+	}
+	public function getWaypoint( $bearing /* degress */, $distance /* meters */ )
+	{
+		// Algorithm from: http://stackoverflow.com/questions/7222382/get-lat-long-given-current-point-distance-and-bearing
+		$x1 = deg2rad($this->lat);
+		$y1 = deg2rad($this->lng);
+		$bearing = deg2rad($bearing);
+		$distance = $distance / self::EARTH_RADIUS;
+		$x2 = asin( sin($x1) * cos($distance) + cos($x1) * sin($distance) * cos($bearing) );
+		$y2 = $y1 + atan2( sin($bearing) * sin($distance) * cos($x1), cos($distance) - sin($x1) * sin($x2) );
+		return new GeoCoord(rad2deg($x2),rad2deg($y2));
 	}
 };
 
