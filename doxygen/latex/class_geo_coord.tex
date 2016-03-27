@@ -1,0 +1,226 @@
+\hypertarget{class_geo_coord}{}\section{Geo\+Coord Class Reference}
+\label{class_geo_coord}\index{Geo\+Coord@{Geo\+Coord}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_geo_coord_a095c5d389db211932136b53f25f39685}{\+\_\+\+\_\+construct} ()
+\item 
+\hyperlink{class_geo_coord_a7516ca30af0db3cdbf9a7739b48ce91d}{\+\_\+\+\_\+to\+String} ()
+\item 
+\hyperlink{class_geo_coord_a46c0721b63a16147f5d31612a92d45fe}{bearing\+To} (\$that)
+\item 
+\hyperlink{class_geo_coord_a4ad806fdffc9dfe7c5686b1c05131061}{distance\+To} (\$that)
+\item 
+\hyperlink{class_geo_coord_a7e245e4074943bd5dee8e67f9e6eb718}{get\+Circle} (\$radius, \$detail=36, \$closed=false)
+\item 
+\hyperlink{class_geo_coord_ab0713a08f83cd79bc725819e1853959a}{get\+Encoded\+Circle} (\$radius, \$detail=36, \$closed=false)
+\item 
+\hyperlink{class_geo_coord_ac9ada6d4e291e5e1f3e4f5d7026050ba}{get\+Waypoint} (\$bearing, \$\hyperlink{class_geo_coord_a0c40020f65f4200d0071dc80398fbbaa}{distance})
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_geo_coord_a0c40020f65f4200d0071dc80398fbbaa}{distance} (\$lat1, \$lng1, \$lat2, \$lng2)
+\item 
+static \hyperlink{class_geo_coord_ac43189d5dc1c5b44a7eeab5cad57fbbb}{encode\+Number} (\$num)
+\item 
+static \hyperlink{class_geo_coord_ada9afc39cada77fa016786250f380a10}{encode\+Polyline} (array \$points)
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{class_geo_coord_aabaad7a967695e8a9cce7a62bd266873}{E\+A\+R\+T\+H\+\_\+\+R\+A\+D\+I\+US} = 6371000
+\begin{DoxyCompactList}\small\item\em Radius of the Earth in meters. \end{DoxyCompactList}\item 
+\hyperlink{class_geo_coord_af498b42b83afed4dfe0af05fd802776c}{\$lat}
+\begin{DoxyCompactList}\small\item\em Latitude of location in degrees. \end{DoxyCompactList}\item 
+\hyperlink{class_geo_coord_ab27bfa6a9380a8d89e1a8e001b276410}{\$lng}
+\begin{DoxyCompactList}\small\item\em Longitude of location in degrees. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_geo_coord}{Geo\+Coord} P\+HP Class.
+
+This class represents a geographical location using latitude and longitude coordinates.
+
+P\+HP version 5
+
+Copyright (C) 2016 Drew Chapin \href{mailto:druciferre@gmail.com}{\tt druciferre@gmail.\+com}
+
+This code is free software\+: you can redistribute it and/or modify it under the terms of the G\+NU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This code is distributed in the hope that it will be useful, but W\+I\+T\+H\+O\+UT A\+NY W\+A\+R\+R\+A\+N\+TY; without even the implied warranty of M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY or F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE. See the G\+NU General Public License for more details.
+
+You should have received a copy of the G\+NU General Public License along with this code. If not, see \href{http://www.gnu.org/licenses/}{\tt http\+://www.\+gnu.\+org/licenses/}. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Geo\+Coord@{Geo\+Coord}!\+\_\+\+\_\+construct@{\+\_\+\+\_\+construct}}
+\index{\+\_\+\+\_\+construct@{\+\_\+\+\_\+construct}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+construct()}{__construct()}}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+construct (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_geo_coord_a095c5d389db211932136b53f25f39685}{}\label{class_geo_coord_a095c5d389db211932136b53f25f39685}
+Initializes the \hyperlink{class_geo_coord}{Geo\+Coord} location object. The initial location can be specified in multiple ways 
+\begin{DoxyParams}{Parameters}
+{\em loat,float} & Latitude,Longitude eg. {\ttfamily new \hyperlink{class_geo_coord}{Geo\+Coord}(34.\+56,-\/87.\+65)} \\
+\hline
+{\em string} & \char`\"{}\+Latitude,\+Longitude\char`\"{} eg. {\ttfamily new \hyperlink{class_geo_coord}{Geo\+Coord}(\char`\"{}34.\+56,-\/87.\+65\char`\"{})} \\
+\hline
+{\em array} & Latitude,Longitude e.\+g. {\ttfamily new \hyperlink{class_geo_coord}{Geo\+Coord}(array(34.\+56,-\/87.\+65))} or {\ttfamily new \hyperlink{class_geo_coord}{Geo\+Coord}(array(\char`\"{}lng\char`\"{}=$>$-\/87.\+65,\char`\"{}lat\char`\"{}=$>$34.\+56))} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{class_geo_coord}{Geo\+Coord}. A new {\ttfamily \hyperlink{class_geo_coord}{Geo\+Coord}} object. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\index{Geo\+Coord@{Geo\+Coord}!\+\_\+\+\_\+to\+String@{\+\_\+\+\_\+to\+String}}
+\index{\+\_\+\+\_\+to\+String@{\+\_\+\+\_\+to\+String}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+to\+String()}{__toString()}}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+to\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_geo_coord_a7516ca30af0db3cdbf9a7739b48ce91d}{}\label{class_geo_coord_a7516ca30af0db3cdbf9a7739b48ce91d}
+Convert object to a string. \begin{DoxyReturn}{Returns}
+string. A {\ttfamily string} representation of the location e.\+g. {\ttfamily \char`\"{}34.\+56,-\/87.\+65\char`\"{}} 
+\end{DoxyReturn}
+\index{Geo\+Coord@{Geo\+Coord}!bearing\+To@{bearing\+To}}
+\index{bearing\+To@{bearing\+To}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{bearing\+To(\$that)}{bearingTo($that)}}]{\setlength{\rightskip}{0pt plus 5cm}bearing\+To (
+\begin{DoxyParamCaption}
+\item[{}]{\$that}
+\end{DoxyParamCaption}
+)}\hypertarget{class_geo_coord_a46c0721b63a16147f5d31612a92d45fe}{}\label{class_geo_coord_a46c0721b63a16147f5d31612a92d45fe}
+Returns the bearing from this location to the specified location in degrees. 
+\begin{DoxyParams}{Parameters}
+{\em \$that} & A {\ttfamily \hyperlink{class_geo_coord}{Geo\+Coord}} instance representing the destination. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float. The bearing in degrees. 
+\end{DoxyReturn}
+\index{Geo\+Coord@{Geo\+Coord}!distance@{distance}}
+\index{distance@{distance}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{distance(\$lat1, \$lng1, \$lat2, \$lng2)}{distance($lat1, $lng1, $lat2, $lng2)}}]{\setlength{\rightskip}{0pt plus 5cm}static distance (
+\begin{DoxyParamCaption}
+\item[{}]{\$lat1, }
+\item[{}]{\$lng1, }
+\item[{}]{\$lat2, }
+\item[{}]{\$lng2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_geo_coord_a0c40020f65f4200d0071dc80398fbbaa}{}\label{class_geo_coord_a0c40020f65f4200d0071dc80398fbbaa}
+Returns the distance between two locations in degrees. 
+\begin{DoxyParams}{Parameters}
+{\em \$lat1} & The latitude of the first location. \\
+\hline
+{\em \$lng1} & The longitude of the first location. \\
+\hline
+{\em \$lat2} & The latitude of the second location. \\
+\hline
+{\em \$lng2} & The longitude of the second location. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float The distance in meters. 
+\end{DoxyReturn}
+\index{Geo\+Coord@{Geo\+Coord}!distance\+To@{distance\+To}}
+\index{distance\+To@{distance\+To}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{distance\+To(\$that)}{distanceTo($that)}}]{\setlength{\rightskip}{0pt plus 5cm}distance\+To (
+\begin{DoxyParamCaption}
+\item[{}]{\$that}
+\end{DoxyParamCaption}
+)}\hypertarget{class_geo_coord_a4ad806fdffc9dfe7c5686b1c05131061}{}\label{class_geo_coord_a4ad806fdffc9dfe7c5686b1c05131061}
+Returns the distance between this location and the specified location in meters. 
+\begin{DoxyParams}{Parameters}
+{\em \$that} & A {\ttfamily \hyperlink{class_geo_coord}{Geo\+Coord}} object representing the destination. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float. The distance in meters. 
+\end{DoxyReturn}
+\index{Geo\+Coord@{Geo\+Coord}!encode\+Number@{encode\+Number}}
+\index{encode\+Number@{encode\+Number}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{encode\+Number(\$num)}{encodeNumber($num)}}]{\setlength{\rightskip}{0pt plus 5cm}static encode\+Number (
+\begin{DoxyParamCaption}
+\item[{}]{\$num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_geo_coord_ac43189d5dc1c5b44a7eeab5cad57fbbb}{}\label{class_geo_coord_ac43189d5dc1c5b44a7eeab5cad57fbbb}
+Encodes a number for use in an encoded polyline according to the algorithm outlined by \href{https://developers.google.com/maps/documentation/utilities/polylinealgorithm}{\tt Google}. 
+\begin{DoxyParams}{Parameters}
+{\em \$num.} & The number to encoded. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string. 
+\end{DoxyReturn}
+\index{Geo\+Coord@{Geo\+Coord}!encode\+Polyline@{encode\+Polyline}}
+\index{encode\+Polyline@{encode\+Polyline}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{encode\+Polyline(array \$points)}{encodePolyline(array $points)}}]{\setlength{\rightskip}{0pt plus 5cm}static encode\+Polyline (
+\begin{DoxyParamCaption}
+\item[{array}]{\$points}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_geo_coord_ada9afc39cada77fa016786250f380a10}{}\label{class_geo_coord_ada9afc39cada77fa016786250f380a10}
+Returns an encoded polyline given an array of points. 
+\begin{DoxyParams}{Parameters}
+{\em \$points.} & An array of {\ttfamily \hyperlink{class_geo_coord}{Geo\+Coord}} objects to encode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string. An encoded polyline. 
+\end{DoxyReturn}
+\index{Geo\+Coord@{Geo\+Coord}!get\+Circle@{get\+Circle}}
+\index{get\+Circle@{get\+Circle}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{get\+Circle(\$radius, \$detail=36, \$closed=false)}{getCircle($radius, $detail=36, $closed=false)}}]{\setlength{\rightskip}{0pt plus 5cm}get\+Circle (
+\begin{DoxyParamCaption}
+\item[{}]{\$radius, }
+\item[{}]{\$detail = {\ttfamily 36}, }
+\item[{}]{\$closed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_geo_coord_a7e245e4074943bd5dee8e67f9e6eb718}{}\label{class_geo_coord_a7e245e4074943bd5dee8e67f9e6eb718}
+\index{Geo\+Coord@{Geo\+Coord}!get\+Encoded\+Circle@{get\+Encoded\+Circle}}
+\index{get\+Encoded\+Circle@{get\+Encoded\+Circle}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{get\+Encoded\+Circle(\$radius, \$detail=36, \$closed=false)}{getEncodedCircle($radius, $detail=36, $closed=false)}}]{\setlength{\rightskip}{0pt plus 5cm}get\+Encoded\+Circle (
+\begin{DoxyParamCaption}
+\item[{}]{\$radius, }
+\item[{}]{\$detail = {\ttfamily 36}, }
+\item[{}]{\$closed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_geo_coord_ab0713a08f83cd79bc725819e1853959a}{}\label{class_geo_coord_ab0713a08f83cd79bc725819e1853959a}
+\index{Geo\+Coord@{Geo\+Coord}!get\+Waypoint@{get\+Waypoint}}
+\index{get\+Waypoint@{get\+Waypoint}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{get\+Waypoint(\$bearing, \$distance)}{getWaypoint($bearing, $distance)}}]{\setlength{\rightskip}{0pt plus 5cm}get\+Waypoint (
+\begin{DoxyParamCaption}
+\item[{}]{\$bearing, }
+\item[{}]{\$distance}
+\end{DoxyParamCaption}
+)}\hypertarget{class_geo_coord_ac9ada6d4e291e5e1f3e4f5d7026050ba}{}\label{class_geo_coord_ac9ada6d4e291e5e1f3e4f5d7026050ba}
+
+
+\subsection{Field Documentation}
+\index{Geo\+Coord@{Geo\+Coord}!\$lat@{\$lat}}
+\index{\$lat@{\$lat}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{\$lat}{$lat}}]{\setlength{\rightskip}{0pt plus 5cm}\$lat}\hypertarget{class_geo_coord_af498b42b83afed4dfe0af05fd802776c}{}\label{class_geo_coord_af498b42b83afed4dfe0af05fd802776c}
+
+
+Latitude of location in degrees. 
+
+\index{Geo\+Coord@{Geo\+Coord}!\$lng@{\$lng}}
+\index{\$lng@{\$lng}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{\$lng}{$lng}}]{\setlength{\rightskip}{0pt plus 5cm}\$lng}\hypertarget{class_geo_coord_ab27bfa6a9380a8d89e1a8e001b276410}{}\label{class_geo_coord_ab27bfa6a9380a8d89e1a8e001b276410}
+
+
+Longitude of location in degrees. 
+
+\index{Geo\+Coord@{Geo\+Coord}!E\+A\+R\+T\+H\+\_\+\+R\+A\+D\+I\+US@{E\+A\+R\+T\+H\+\_\+\+R\+A\+D\+I\+US}}
+\index{E\+A\+R\+T\+H\+\_\+\+R\+A\+D\+I\+US@{E\+A\+R\+T\+H\+\_\+\+R\+A\+D\+I\+US}!Geo\+Coord@{Geo\+Coord}}
+\subsubsection[{\texorpdfstring{E\+A\+R\+T\+H\+\_\+\+R\+A\+D\+I\+US}{EARTH_RADIUS}}]{\setlength{\rightskip}{0pt plus 5cm}const E\+A\+R\+T\+H\+\_\+\+R\+A\+D\+I\+US = 6371000}\hypertarget{class_geo_coord_aabaad7a967695e8a9cce7a62bd266873}{}\label{class_geo_coord_aabaad7a967695e8a9cce7a62bd266873}
+
+
+Radius of the Earth in meters. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_8geocoord_8php}{class.\+geocoord.\+php}\end{DoxyCompactItemize}

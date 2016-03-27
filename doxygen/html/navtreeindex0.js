@@ -1,0 +1,23 @@
+var NAVTREEINDEX0 =
+{
+"annotated.html":[0,0],
+"class_8geocoord_8php.html":[1,0,0],
+"class_geo_coord.html":[0,0,0],
+"class_geo_coord.html#a095c5d389db211932136b53f25f39685":[0,0,0,0],
+"class_geo_coord.html#a46c0721b63a16147f5d31612a92d45fe":[0,0,0,2],
+"class_geo_coord.html#a4ad806fdffc9dfe7c5686b1c05131061":[0,0,0,3],
+"class_geo_coord.html#a7516ca30af0db3cdbf9a7739b48ce91d":[0,0,0,1],
+"class_geo_coord.html#a7e245e4074943bd5dee8e67f9e6eb718":[0,0,0,4],
+"class_geo_coord.html#aabaad7a967695e8a9cce7a62bd266873":[0,0,0,9],
+"class_geo_coord.html#ab0713a08f83cd79bc725819e1853959a":[0,0,0,5],
+"class_geo_coord.html#ab27bfa6a9380a8d89e1a8e001b276410":[0,0,0,8],
+"class_geo_coord.html#ac9ada6d4e291e5e1f3e4f5d7026050ba":[0,0,0,6],
+"class_geo_coord.html#af498b42b83afed4dfe0af05fd802776c":[0,0,0,7],
+"classes.html":[0,1],
+"files.html":[1,0],
+"functions.html":[0,2,0],
+"functions_func.html":[0,2,1],
+"functions_vars.html":[0,2,2],
+"index.html":[],
+"pages.html":[]
+};

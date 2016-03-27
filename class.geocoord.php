@@ -1,7 +1,7 @@
 <?php
 /**
- * GeoCoord PHP Class
- *
+ * GeoCoord PHP Class.
+ * 
  * This class represents a geographical location using latitude and longitude
  * coordinates.
  *
@@ -21,19 +21,34 @@
  *
  *    You should have received a copy of the GNU General Public License
  *    along with this code.  If not, see <http://www.gnu.org/licenses/>.
- **/
+ */
 
 class GeoCoord
 {
+	/// Radius of the Earth in meters.
 	const EARTH_RADIUS = 6371000;
+	/// Latitude of location in degrees.
 	public $lat;
+	/// Longitude of location in degrees.
 	public $lng;
+	/** Initializes the GeoCoord location object. 
+	 * The initial location can be specified in multiple ways
+	 * @param loat,float	Latitude,Longitude eg. `new GeoCoord(34.56,-87.65)`
+	 * @param string		"Latitude,Longitude" eg. `new GeoCoord("34.56,-87.65")`
+	 * @param array			Latitude,Longitude e.g. `new GeoCoord(array(34.56,-87.65))`
+	 *							or `new GeoCoord(array("lng"=>-87.65,"lat"=>34.56))`
+	 * @returns GeoCoord. A new `GeoCoord` object.
+	 */
 	function __construct()
 	{
 		$params = func_get_args();
 		$num_params = func_num_args();
 		switch( $num_params )
 		{
+			case 0:
+				$this->lat = 0;
+				$this->lng = 0;
+				break;
 			case 1:
 				if( is_string($params[0]) )
 				{
@@ -66,14 +81,22 @@ class GeoCoord
 				$this->lat = $params[0];
 				$this->lng = $params[1];
 				break;
-			//default:
+			default:
 			//	throw new Exception(get_class($this) . " constructor does not take " . $num_params);
 		}
 	}
+	/** Convert object to a string.
+	 * @returns string. A `string` representation of the location e.g. `"34.56,-87.65"`
+	 */
 	public function __toString()
 	{
 		return $this->lat . "," . $this->lng;
 	}
+	/** 
+	 * Returns the bearing from this location to the specified location in degrees.
+	 * @param $that  A `GeoCoord` instance representing the destination.
+	 * @returns float. The bearing in degrees.
+	 */ 
 	public function bearingTo( $that )
 	{
 		// Algorithm from: https://trac.osgeo.org/openlayers/wiki/GreatCircleAlgorithms
@@ -94,6 +117,14 @@ class GeoCoord
 			$adjust = $a<0 ? 2*pi() : 0;
 		return rad2deg(atan($a/$b) + $adjust);
 	}
+	/**
+	 * Returns the distance between two locations in degrees.
+	 * @param $lat1		The latitude of the first location.
+	 * @param $lng1		The longitude of the first location.
+	 * @param $lat2		The latitude of the second location.
+	 * @param $lng2		The longitude of the second location.
+	 * @returns float	The distance in meters.
+	 */
 	public static function distance( $lat1, $lng1, $lat2, $lng2 )
 	{
 		//$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($lng1 - $lng2));
@@ -108,13 +139,24 @@ class GeoCoord
 		return $dist * self::EARTH_RADIUS;
 
 	}
+	/**
+	 * Returns the distance between this location and the specified location in meters.
+	 * @param $that		A `GeoCoord` object representing the destination.
+	 * @returns float. The distance in meters.
+	 */
 	public function distanceTo( $that )
 	{
 		return self::distance($this->lat,$this->lng,$that->lat,$that->lng);
 	}
+	/**
+	 * Encodes a number for use in an encoded polyline according to the algorithm outlined by 
+	 * [Google](https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+	 * @param $num.	The number to encoded.
+	 * @returns string.
+	 */
 	public static function encodeNumber( $num )
 	{
-		// Algorithm from: https://developers.google.com/maps/documentation/utilities/polylinealgorithm
+		// Algorithm from:
 		$enc_num = "";
 		// multiply by 1e5 and round (step 2)
 		$num = round($num*1e5);
@@ -143,6 +185,11 @@ class GeoCoord
 		}
 		return $enc_num;
 	}
+	/**
+	 * Returns an encoded polyline given an array of points.
+	 * @param $points.	An array of `GeoCoord` objects to encode.
+	 * @returns string.	An encoded polyline.
+	 */
 	public static function encodePolyline( array $points )
 	{
 		$enc[] = self::encodeNumber($points[0]->lat) . self::encodeNumber($points[0]->lng);
