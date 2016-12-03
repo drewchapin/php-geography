@@ -1,6 +1,6 @@
 <?php
 /**
- * GeoCoord PHP Class.
+ * Geography PHP Class.
  * 
  * This class represents a geographical location using latitude and longitude
  * coordinates.
@@ -23,7 +23,9 @@
  *    along with this code.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class GeoCoord
+namespace Geography;
+
+class Location
 {
 	/// Radius of the Earth in meters.
 	const EARTH_RADIUS = 6371000;
@@ -31,13 +33,13 @@ class GeoCoord
 	public $lat;
 	/// Longitude of location in degrees.
 	public $lng;
-	/** Initializes the GeoCoord location object. 
+	/** Initializes the Location object. 
 	 * The initial location can be specified in multiple ways
-	 * @param loat,float	Latitude,Longitude eg. `new GeoCoord(34.56,-87.65)`
-	 * @param string		"Latitude,Longitude" eg. `new GeoCoord("34.56,-87.65")`
-	 * @param array			Latitude,Longitude e.g. `new GeoCoord(array(34.56,-87.65))`
-	 *							or `new GeoCoord(array("lng"=>-87.65,"lat"=>34.56))`
-	 * @returns GeoCoord. A new `GeoCoord` object.
+	 * @param loat,float	Latitude,Longitude eg. `new Location(34.56,-87.65)`
+	 * @param string		"Latitude,Longitude" eg. `new Location("34.56,-87.65")`
+	 * @param array			Latitude,Longitude e.g. `new Location(array(34.56,-87.65))`
+	 *							or `new Location(array("lng"=>-87.65,"lat"=>34.56))`
+	 * @returns GeoCoord. A new `Location` object.
 	 */
 	function __construct()
 	{
@@ -94,7 +96,7 @@ class GeoCoord
 	}
 	/** 
 	 * Returns the bearing from this location to the specified location in degrees.
-	 * @param $that  A `GeoCoord` instance representing the destination.
+	 * @param $that  A `Location` instance representing the destination.
 	 * @returns float. The bearing in degrees.
 	 */ 
 	public function bearingTo( $that )
@@ -141,7 +143,7 @@ class GeoCoord
 	}
 	/**
 	 * Returns the distance between this location and the specified location in meters.
-	 * @param $that		A `GeoCoord` object representing the destination.
+	 * @param $that		A `Location` object representing the destination.
 	 * @returns float. The distance in meters.
 	 */
 	public function distanceTo( $that )
@@ -187,7 +189,7 @@ class GeoCoord
 	}
 	/**
 	 * Returns an encoded polyline given an array of points.
-	 * @param $points.	An array of `GeoCoord` objects to encode.
+	 * @param $points.	An array of `Location` objects to encode.
 	 * @returns string.	An encoded polyline.
 	 */
 	public static function encodePolyline( array $points )
